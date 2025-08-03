@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoCAD.NET" Version="24.0.0" />
-    <PackageReference Include="WfunCharp.CustomEnt.Arch.1.0.0.0" Version="1.0.0" />
+    <PackageReference Include="WfunCharp.CustomEnt.Arch" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

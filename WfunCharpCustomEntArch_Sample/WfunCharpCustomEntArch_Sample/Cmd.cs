@@ -1,4 +1,5 @@
 ﻿using System;
+using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 using WfunCharp.CustomEnt.Arch;
 using WfunCharp.CustomEnt.Arch.EntityArch;
@@ -25,7 +26,7 @@ namespace WfunCharpCustomEntArch_Sample
         public static void WfunCharpCustomEntArch_Sample_Test()
         {
             WfunTestCharpCustomEnt ent = new WfunTestCharpCustomEnt();
-            ent.UpDataFromCharp();
+            ent.UpDataFromCharp(); // 必须调用，否则C#修改的数据更新不到实体上
             CadUnits.AppendEntity(ent);
         }
         [CommandMethod("WfunCharpCustomEntArch_Sample_TestSelect")]
@@ -38,17 +39,23 @@ namespace WfunCharpCustomEntArch_Sample
 
             var ents = CadUnits.CurEdit().GetSelection(filter);
 
-            if (ents.Value.Count == 0)
+            if (null == ents || ents.Value == null || ents.Value.Count == 0)
                 return;
 
             using(var ts = CadUnits.StartTransaction())
             {
                 var id = ents.Value[0].ObjectId;
-                var entGet = RegEntArch.CreateEntArch(id, ts, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+                var entGet = RegEntArch.CreateEntArch(id, ts, OpenMode.ForWrite);
 
                 if (entGet == null)
                     return;
                 WfunTestCharpCustomEnt ent = entGet as WfunTestCharpCustomEnt;
+                ent.ColorIndex = 1;
+                ent.Radius = 1000;
+
+                ent.UpDataFromCharp();// 必须调用，否则C#修改的数据更新不到实体上
+
+                ts.Commit();
             }
 
         }
