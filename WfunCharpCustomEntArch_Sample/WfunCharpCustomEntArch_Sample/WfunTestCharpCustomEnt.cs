@@ -14,12 +14,11 @@ namespace WfunCharpCustomEntArch_Sample
         private Point3d m_ptCenter = Point3d.Origin;
         private double m_radius = 100;
         public WfunTestCharpCustomEnt()
-            :base()
         {
 
         }
         public WfunTestCharpCustomEnt(IntPtr unmanagedObjPtr)
-            : base(unmanagedObjPtr)
+            :this(unmanagedObjPtr, false)
         {
 
         }

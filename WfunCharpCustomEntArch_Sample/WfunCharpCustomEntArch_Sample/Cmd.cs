@@ -12,7 +12,7 @@ namespace WfunCharpCustomEntArch_Sample
             // 注册
             RegEntArch.Register<WfunTestCharpCustomEnt>(
                 (unmanagedObjPtr, autoDelete) => 
-                new EntCharpCustomEntBase(unmanagedObjPtr, autoDelete));
+                new WfunTestCharpCustomEnt(unmanagedObjPtr, autoDelete));
         }
 
         public void Terminate()
