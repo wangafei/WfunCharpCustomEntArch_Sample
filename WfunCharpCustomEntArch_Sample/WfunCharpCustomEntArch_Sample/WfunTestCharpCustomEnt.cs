@@ -102,5 +102,48 @@ namespace WfunCharpCustomEntArch_Sample
             m_ptCenter = m_ptCenter.TransformBy(xform);
             return true;
         }
+        /// <summary>
+        /// 获取捕捉点
+        /// </summary>
+        /// <param name="osnapMode">捕捉点类型</param>
+        /// <param name="gsSelectionMark">标记</param>
+        /// <param name="pickPoint">拾取点</param>
+        /// <param name="lastPoint">上一个点</param>
+        /// <param name="viewXform">视口矩阵</param>
+        /// <param name="snapPoints">返回捕捉点</param>
+        /// <param name="geomIds">返回几何id？</param>
+        /// <returns>true:采用本函数中的捕捉点规则，false：采用默认规则</returns>
+        protected override bool SubEntGetOsnapPoints(ObjectSnapModes osnapMode, int gsSelectionMark,
+            Point3d pickPoint, Point3d lastPoint, Matrix3d viewXform, List<Point3d> snapPoints, List<int> geomIds)
+        {
+            Circle c = new Circle();
+            c.Center = m_ptCenter;
+            c.Radius = m_radius;
+
+            switch (osnapMode)
+            {
+                case ObjectSnapModes.ModeCenter:
+                    {
+                        // 圆心
+                        snapPoints.Add(m_ptCenter);
+                        break;
+                    }
+                case ObjectSnapModes.ModeNear:
+                    {
+                        // 最近点
+                        var pt = c.GetClosestPointTo(pickPoint, false);
+                        snapPoints.Add(pt);
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+
+
+
+            return true;
+        }
     }
 }
