@@ -54,10 +54,17 @@ namespace WfunCharpCustomEntArch_Sample
         /// <returns></returns>
         protected override bool SubDraw(DrawEnt mode)
         {
-            mode.Draw(new Circle() { Center = m_ptCenter, Radius = m_radius });
+            mode.Draw(CreateCircle());
 
             return true;
 
+        }
+        private Circle CreateCircle()
+        {
+            Circle c = new Circle();
+            c.Center = m_ptCenter;
+            c.Radius = m_radius;
+            return c;
         }
         /// <summary>
         /// 显示的实体夹点
@@ -116,9 +123,7 @@ namespace WfunCharpCustomEntArch_Sample
         protected override bool SubEntGetOsnapPoints(ObjectSnapModes osnapMode, int gsSelectionMark,
             Point3d pickPoint, Point3d lastPoint, Matrix3d viewXform, List<Point3d> snapPoints, List<int> geomIds)
         {
-            Circle c = new Circle();
-            c.Center = m_ptCenter;
-            c.Radius = m_radius;
+            Circle c = CreateCircle();
 
             switch (osnapMode)
             {
@@ -142,6 +147,58 @@ namespace WfunCharpCustomEntArch_Sample
             }
 
 
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// 求取交点
+        /// </summary>
+        /// <param name="entityPointer"></param>
+        /// <param name="intType"></param>
+        /// <param name="points"></param>
+        /// <param name="thisGsMarker"></param>
+        /// <param name="otherGsMarker"></param>
+        /// <returns></returns>
+        protected override bool SubEntIntersectWith(Entity entityPointer,
+                Intersect intType,
+                Point3dCollection points,
+                IntPtr? thisGsMarker = null, IntPtr? otherGsMarker = null)
+        {
+            if (null == entityPointer || points == null)
+                return false;
+            var c = CreateCircle();
+            c.IntersectWith(entityPointer, intType, points, thisGsMarker ?? IntPtr.Zero, otherGsMarker ?? IntPtr.Zero);
+
+            CadUnits.WriteMessage($"交点个数:{points.Count}");
+            for (int i = 0; i < points.Count; ++i)
+            {
+                CadUnits.WriteMessage($"交点{i}:{points[i]}");
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 求取交点
+        /// </summary>
+        /// <param name="entityPointer"></param>
+        /// <param name="intType"></param>
+        /// <param name="projPlane"></param>
+        /// <param name="points"></param>
+        /// <param name="thisGsMarker"></param>
+        /// <param name="otherGsMarker"></param>
+        /// <returns></returns>
+        protected override bool SubEntIntersectWith(Entity entityPointer,
+            Intersect intType,
+            Plane projPlane,
+            Point3dCollection points,
+            IntPtr? thisGsMarker = null, IntPtr? otherGsMarker = null)
+        {
+            if (null == entityPointer || points == null)
+                return false;
+            var c = CreateCircle();
+            c.IntersectWith(entityPointer, intType, projPlane, points, thisGsMarker ?? IntPtr.Zero, otherGsMarker ?? IntPtr.Zero);
 
             return true;
         }
