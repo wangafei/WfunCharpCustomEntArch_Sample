@@ -1,3 +1,4 @@
+引用库地址：https://www.nuget.org/packages/WfunCharp.CustomEnt.Arch
 # WfunCharpCustomEntArch_Sample
 C#实现自定义实体样例工程仓库
 | net版本 | 对应CAD版本 | Rx版本 |
