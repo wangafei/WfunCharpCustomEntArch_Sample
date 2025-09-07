@@ -16,3 +16,4 @@ C#实现自定义实体样例工程仓库
 ------------------------------------------------------------------------------
 如果现有C++自定义实体信息不满足个人或公司需求，可以进行定制开发
 如需定制开发包，请联系：https://item.taobao.com/item.htm?id=811315132929
+<img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/12bbc92a-e4c3-417b-b10b-e05f974c9f49" />
